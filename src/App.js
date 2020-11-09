@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
-import FriendFinder from './components/FriendFinder/FriendFinder';
+import Routes from './Routes';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <FriendFinder />
+        <Routes />
       </Router>
     </div>
   );
