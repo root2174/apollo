@@ -1,0 +1,9 @@
+{
+    "id": 1,
+    "firstName": "Lucas",
+    "lastName": "Magalhães",
+    "password": "wda5sd1awd",
+    "dob": "08/11/1992",
+    "friends": [2, 3, 4, 5]
+}
+
