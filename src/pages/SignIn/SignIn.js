@@ -7,6 +7,7 @@ import logo from '../../assets/apollo-logo.svg';
 import { Container } from '../../components/containers/Layout/Layout';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
+import BackLink from '../../components/common/BackLink';
 
 const FormContainer = styled(Container)`
   display: flex;
@@ -62,10 +63,11 @@ const SignIn = () => {
           <Input placeholder="Email" />
           <Input placeholder="Password" />
           <Button type="submit">Sign In</Button>
-
-          <Link to="/signup">
-            <FiLogIn size={16} />I don&apos;t have an account
-          </Link>
+          <BackLink>
+            <Link to="/signup">
+              <FiLogIn size={16} />I don&apos;t have an account
+            </Link>
+          </BackLink>
         </Form>
       </Section>
       <Img src={image} alt="Friends hugging" />
