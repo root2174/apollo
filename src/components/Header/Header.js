@@ -1,66 +1,79 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FiPower } from 'react-icons/fi';
+import logo from '../../assets/apollo-logo.svg';
 
-const MainHeader = styled.header``;
-
-const Navbar = styled.nav`
-  background-color: #333;
-  color: #fff;
-  overflow: auto;
+const MainHeader = styled.header`
   display: flex;
   align-items: center;
-`;
-
-const Logo = styled.h1`
-  float: left;
-  padding: 10px;
-  margin-left: 20px;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  display: flex;
-  align-items: center;
-
-  &:nth-child(2) {
-    margin-left: 100px;
-  }
-`;
-
-const ListItem = styled.li`
-  margin-left: 20px;
 
   a {
-    color: #fff;
-    display: block;
-    height: 100%;
-    padding: 27px;
-  }
+    width: 100%;
+    height: 60px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-top: 16px;
+    background: #6c63ff;
+    color: #f8f8f8;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    transition: filter 0.2s;
 
-  a:hover {
-    background-color: #444;
-    color: #f7c08a;
+    &:hover {
+      filter: brightness(90%);
+    }
+    width: 260px;
+    margin-left: auto;
+    margin-top: 0;
   }
 `;
 
-const Header = () => {
+const Img = styled.img`
+  width: 20%;
+`;
+
+const WelcomeMessage = styled.span`
+  font-size: 20px;
+  margin-left: 24px;
+`;
+
+const PowerButton = styled.button`
+  height: 60px;
+  width: 60px;
+  border-radius: 4px;
+  border: 1px solid #dcdce6;
+  background: transparent;
+  margin-left: 16px;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #999;
+  }
+`;
+
+const Header = ({ redirectTo, linkMessage }) => {
   return (
     <MainHeader>
-      <Navbar>
-        <Logo>APOLLO</Logo>
-        <List>
-          <ListItem>
-            <Link to="/my-friends">My Friends</Link>
-          </ListItem>
-          <ListItem>
-            <Link to="/discover-friends">Discover Friends</Link>
-          </ListItem>
-        </List>
-      </Navbar>
+      <Img src={logo} alt="Apollo" />
+      <WelcomeMessage>Bem vinda, APAD</WelcomeMessage>
+      <Link to={redirectTo}>{linkMessage}</Link>
+      <PowerButton type="button">
+        <FiPower size={18} color="#6c63ff" />
+      </PowerButton>
     </MainHeader>
   );
+};
+
+Header.propTypes = {
+  redirectTo: PropTypes.string.isRequired,
+  linkMessage: PropTypes.string.isRequired,
 };
 
 export default Header;

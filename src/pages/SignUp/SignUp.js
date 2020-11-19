@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiArrowLeft } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 import logo from '../../assets/apollo-logo.svg';
 import BackLink from '../../components/common/BackLink';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { Container } from '../../components/containers/Layout/Layout';
+import api from '../../services/api';
 
 const RegisterContainer = styled(Container)`
   display: flex;
@@ -50,6 +52,14 @@ const InputForm = styled(Input)`
   margin-top: 8px;
 `;
 
+const InputRadioGroup = styled.div`
+  margin: 1rem 0 0.5rem;
+`;
+
+const InputRadio = styled.input`
+  margin-left: 1rem;
+`;
+
 const InputGroup = styled.div`
   display: flex;
 
@@ -59,6 +69,38 @@ const InputGroup = styled.div`
 `;
 
 const SignUp = () => {
+  const [name, setName] = useState('');
+  const [dob, setDob] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+  const [password, setPassword] = useState('');
+  const [interests, setInterests] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+
+  async function handleSignUp(e) {
+    e.preventDefault();
+    try {
+      const data = {
+        name,
+        email,
+        dob,
+        gender,
+        password,
+        interests,
+        city,
+        state,
+        friends: '[]',
+      };
+      await api.post('/user', data);
+      toast.success('User registered!');
+    } catch (err) {
+      toast.error('Was not able to register user.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
+
   return (
     <RegisterContainer>
       <Content>
@@ -74,13 +116,56 @@ const SignUp = () => {
             </Link>
           </BackLink>
         </Section>
-        <Form action="">
-          <InputForm placeholder="Name" />
-          <InputForm type="email" placeholder="Email" />
-          <InputForm type="password" placeholder="Password" />
+        <Form onSubmit={handleSignUp}>
+          <InputForm
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <InputForm
+            placeholder="Date of Birth"
+            type="date"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          <InputRadioGroup
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <InputRadio type="radio" value="Male" name="gender" /> Male
+            <InputRadio type="radio" value="Female" name="gender" /> Female
+            <InputRadio type="radio" value="Other" name="gender" /> Other
+          </InputRadioGroup>
+          <InputForm
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputForm
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputForm
+            type="text"
+            placeholder="Your interests, separated by a comma"
+            value={interests}
+            onChange={(e) => setInterests(e.target.value)}
+          />
           <InputGroup>
-            <InputForm placeholder="City" />
-            <InputForm placeholder="State" style={{ width: 82 }} />
+            <InputForm
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <InputForm
+              placeholder="State"
+              style={{ width: 82 }}
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
           </InputGroup>
           <Button type="submit"> Sign Up </Button>
         </Form>
