@@ -5,39 +5,38 @@ import Button from '../common/Button';
 import femaleImg from '../../assets/female.png';
 import maleImg from '../../assets/male.png';
 
+const UserLayout = styled.li`
+  display: flex;
+  align-items: center;
+  background-color: lightgrey;
+  max-width: 350px;
+  justify-content: space-evenly;
+  border-radius: 8px;
+`;
+
+const UserImg = styled.img`
+  padding: 10px;
+  width: 40%;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const RemoveButton = styled(Button)`
+  width: 90px;
+  height: 40px;
+  line-height: 25px;
+  margin-top: 3px;
+  background: #c57;
+`;
+
+const AddButton = styled(RemoveButton)`
+  background: #ae5;
+`;
 const UserCard = ({ name, age, city, state, gender, remove }) => {
-  const UserLayout = styled.li`
-    display: flex;
-    align-items: center;
-    background-color: lightgrey;
-    max-width: 350px;
-    justify-content: space-evenly;
-    border-radius: 8px;
-  `;
-
-  const UserImg = styled.img`
-    padding: 10px;
-    width: 40%;
-  `;
-
-  const UserInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `;
-
-  const RemoveButton = styled(Button)`
-    width: 90px;
-    height: 40px;
-    line-height: 25px;
-    margin-top: 3px;
-    background: #c57;
-  `;
-
-  const AddButton = styled(RemoveButton)`
-    background: #ae5;
-  `;
-
   const button = remove ? (
     <RemoveButton>Remove</RemoveButton>
   ) : (
@@ -69,7 +68,7 @@ const UserCard = ({ name, age, city, state, gender, remove }) => {
 
 UserCard.propTypes = {
   name: PropTypes.string.isRequired,
-  age: PropTypes.number.isRequired,
+  age: PropTypes.string.isRequired,
   city: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,

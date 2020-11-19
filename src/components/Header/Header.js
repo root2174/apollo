@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiPower } from 'react-icons/fi';
 import logo from '../../assets/apollo-logo.svg';
 
@@ -39,11 +39,6 @@ const Img = styled.img`
   width: 20%;
 `;
 
-const WelcomeMessage = styled.span`
-  font-size: 20px;
-  margin-left: 24px;
-`;
-
 const PowerButton = styled.button`
   height: 60px;
   width: 60px;
@@ -59,12 +54,17 @@ const PowerButton = styled.button`
 `;
 
 const Header = ({ redirectTo, linkMessage }) => {
+  const history = useHistory();
+  const handleSignOut = () => {
+    sessionStorage.clear();
+    history.push('/');
+  };
+
   return (
     <MainHeader>
       <Img src={logo} alt="Apollo" />
-      <WelcomeMessage>Bem vinda, APAD</WelcomeMessage>
       <Link to={redirectTo}>{linkMessage}</Link>
-      <PowerButton type="button">
+      <PowerButton type="button" onClick={handleSignOut}>
         <FiPower size={18} color="#6c63ff" />
       </PowerButton>
     </MainHeader>
