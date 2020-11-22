@@ -130,7 +130,7 @@ const SignUp = () => {
           />
           <InputRadioGroup
             value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => setGender(e.target.value.toLocaleLowerCase)}
           >
             <InputRadio type="radio" value="Male" name="gender" /> Male
             <InputRadio type="radio" value="Female" name="gender" /> Female
@@ -152,19 +152,19 @@ const SignUp = () => {
             type="text"
             placeholder="Your interests, separated by a comma"
             value={interests}
-            onChange={(e) => setInterests(e.target.value)}
+            onChange={(e) => setInterests(e.target.value.toLocaleLowerCase)}
           />
           <InputGroup>
             <InputForm
               placeholder="City"
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => setCity(e.target.value.toLocaleLowerCase)}
             />
             <InputForm
               placeholder="State"
               style={{ width: 82 }}
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => setState(e.target.value.toLocaleLowerCase)}
             />
           </InputGroup>
           <Button type="submit"> Sign Up </Button>

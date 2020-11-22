@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Header from '../../components/Header/Header';
 import ProfileContainer from '../../components/containers/ProfileContainer';
 import UserCard from '../../components/UserCard/UserCard';
-// eslint-disable-next-line no-unused-vars
 import api from '../../services/api';
 
 const Friends = styled.ul`
@@ -56,7 +55,13 @@ const MyFriends = () => {
 
       <H1>Your friends</H1>
 
-      <Friends>{friendsCards}</Friends>
+      {friendsCards.length === 0 ? (
+        <p style={{ textAlign: 'center' }}>
+          Go to discover friends and start adding new friends!
+        </p>
+      ) : (
+        <Friends>{friendsCards}</Friends>
+      )}
     </ProfileContainer>
   );
 };

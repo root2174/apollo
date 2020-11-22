@@ -55,6 +55,7 @@ const PowerButton = styled.button`
 
 const Header = ({ redirectTo, linkMessage }) => {
   const history = useHistory();
+
   const handleSignOut = () => {
     sessionStorage.clear();
     history.push('/');
