@@ -9,10 +9,6 @@ export function nCommonFriends(user1, user2) {
   );
 
   return commonFriends.length;
-
-  // return user1Friends.some((item) => {
-  //   return user2Friends.includes(item);
-  // });
 }
 
 export function nCommonInterests(user1, user2) {
@@ -62,29 +58,21 @@ export function friendsOfFriends(currentUser, graph) {
       friendsOfFriendsIdsArr.push(...user.friends);
     }
   }
-  // graph.map((user) => {
-  //   console.log(user);
-  //   // IS THIS USER A FRIEND OF THE CURRENT USER?
-  //   if (userFriends.includes(user.id)) {
-  //     // IF SO, APPEND USER FRIENDS TO THE friendsOfFriendsIdsArr
-  //     return friendsOfFriendsIdsArr.push(...user.friends);
-  //   }
-  //   return null;
-  // });
   return graph.filter((user) => friendsOfFriendsIdsArr.includes(user.id));
 }
 
 export function recommendations(currentUser, graph) {
-  const possibleFriends = friendsOfFriends(currentUser, graph);
-  possibleFriends.map((friend) => {
-    console.log(`current user: ${JSON.stringify(currentUser)}`);
-    console.log(`friend: ${JSON.stringify(friend)}`);
-    const data = {
+  let possibleFriends = friendsOfFriends(currentUser, graph);
+  // FILTER OUT AREADY ADDED FRIENDS
+  possibleFriends = possibleFriends.filter((friend) => {
+    const { friends } = currentUser;
+    return !friends.includes(friend.id);
+  });
+  const possibleFriendsSum = possibleFriends.map((friend) => {
+    return {
       ...friend,
       sum: commonSum(currentUser, friend),
     };
-    console.log(data);
-    return data;
   });
-  console.log(possibleFriends);
+  return possibleFriendsSum.sort((a, b) => a.sum - b.sum);
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/Header/Header';
@@ -18,19 +20,44 @@ const H1 = styled.h1`
 `;
 
 const MyFriends = () => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [friends, setFriends] = useState([]);
+  const [userIsSet, setUserIsSet] = useState(false);
 
   useEffect(() => {
     setUser(JSON.parse(sessionStorage.getItem('user')));
+    setUserIsSet(true);
   }, []);
 
-  useEffect(() => {
+  if (user && userIsSet) {
     const data = {
       friendsIds: user.friends,
     };
-    api.post('/user/friends', data).then((res) => setFriends(res.data));
-  }, [user]);
+    api.post('/user/friends', data).then((res) => {
+      setFriends(res.data);
+      setUserIsSet(false);
+    });
+  }
+
+  const handleRemoveFriend = async (id) => {
+    const userFriends = JSON.parse(user.friends);
+    const friendIndex = userFriends.findIndex((friend) => {
+      return friend.id === id;
+    });
+    userFriends.splice(friendIndex, 1);
+    const updatedUser = {
+      ...user,
+      friends: JSON.stringify(userFriends),
+    };
+    sessionStorage.setItem('user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    await api.put(`/user/${updatedUser.id}`, updatedUser);
+    const req = {
+      friendsIds: JSON.stringify(userFriends),
+    };
+    const res = await api.post('/user/friends', req);
+    setFriends(res.data);
+  };
 
   const friendsCards = friends.map((friend) => {
     return (
@@ -41,6 +68,7 @@ const MyFriends = () => {
         city={friend.city}
         state={friend.state}
         gender={friend.gender}
+        onClick={() => handleRemoveFriend(friend.id)}
         remove
       />
     );

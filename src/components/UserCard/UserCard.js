@@ -36,11 +36,11 @@ const RemoveButton = styled(Button)`
 const AddButton = styled(RemoveButton)`
   background: #ae5;
 `;
-const UserCard = ({ name, age, city, state, gender, remove }) => {
+const UserCard = ({ name, age, city, state, gender, remove, onClick }) => {
   const button = remove ? (
-    <RemoveButton>Remove</RemoveButton>
+    <RemoveButton onClick={onClick}>Remove</RemoveButton>
   ) : (
-    <AddButton>Add</AddButton>
+    <AddButton onClick={onClick}>Add</AddButton>
   );
 
   let userImg = null;
@@ -73,6 +73,7 @@ UserCard.propTypes = {
   state: PropTypes.string.isRequired,
   remove: PropTypes.bool.isRequired,
   gender: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default UserCard;
