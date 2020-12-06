@@ -42,8 +42,10 @@ const MyFriends = () => {
   const handleRemoveFriend = async (id) => {
     const userFriends = JSON.parse(user.friends);
     const friendIndex = userFriends.findIndex((friend) => {
-      return friend.id === id;
+      console.log(friend);
+      return friend === id;
     });
+    debugger;
     userFriends.splice(friendIndex, 1);
     const updatedUser = {
       ...user,
